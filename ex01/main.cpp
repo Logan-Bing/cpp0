@@ -1,12 +1,15 @@
 #include <iostream>
+#include <stdexcept>
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
 
 int main()
 {
-	Contact c()
+	try {
+		Contact c("", "", "a", "ewq", "ewqewq");
+	} catch (std::invalid_argument& e) {
+		std::cerr << e.what();
+	}
 
-	std::cout << c.first_name << '\n';
-	
 	return (0);
 }

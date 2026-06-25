@@ -1,17 +1,65 @@
 #include "Contact.hpp"
-#include <iostream>
+#include <iomanip>
 
 Contact::Contact(
 		const std::string& first_name,
 		const std::string& last_name,
 		const std::string& nickname,
-		int phone_number, 
-		int darkest_secret
+		const std::string& phone_number,
+		const std::string& darkest_secret
 )
 {
-	this->first_name = first_name;
-	this->last_name = last_name;
-	this->nickname = nickname;
-	this->phone_number = phone_number;
-	this->darkest_secret = darkest_secret;
+	isValidInput(first_name) ? this->first_name = first_name : throw std::invalid_argument("invalid_argument (first_name)");
+	isValidInput(last_name) ? this->nickname = last_name: throw std::invalid_argument("invalid_argument (last_name)");
+	isValidInput(nickname) ? this->nickname = nickname : throw std::invalid_argument("invalid_argument (nickname)");
+	isValidInput(phone_number) ? this->phone_number = phone_number : throw std::invalid_argument("invalid_argument (phone_number)");
+	isValidInput(darkest_secret) ? this->darkest_secret = darkest_secret : throw std::invalid_argument("invalid_argument (darkest_secret)");
+}
+
+const std::string&	Contact::getFirstName(void) const
+{
+	return (this->first_name);
+}
+
+const std::string&	Contact::getLastName(void) const
+{
+	return (this->last_name);
+}
+
+const std::string&	Contact::getNickName(void) const
+{
+	return (this->nickname);
+}
+
+const std::string&	Contact::getPhoneNumber(void) const
+{
+	return (this->phone_number);
+}
+
+const std::string&	Contact::getDarkestSecret(void) const
+{
+	return (this->darkest_secret);
+}
+
+bool	Contact::isValidInput(const std::string& input)
+{
+	return input.empty() ? false : true;
+}
+
+std::ostream& operator<<(std::ostream& os, const Contact& c)
+{
+	os.setf(std::ios_base::right);
+	// os << std::setfill('.');
+	os << std::setw(10);
+	os << c.getFirstName() << '|';
+	os << std::setw(10);
+	os << c.getLastName() << '|';
+	os << std::setw(10);
+	os << c.getNickName() << '|';
+	os << std::setw(10);
+	os << c.getPhoneNumber() << '|';
+	os << std::setw(10);
+	os << c.getDarkestSecret();
+	os << '\n';
+	return (os);
 }
