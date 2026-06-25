@@ -1,3 +1,6 @@
+#ifndef CONTACT_HPP
+#define CONTACT_HPP
+
 #include <iostream>
 
 class Contact
@@ -10,6 +13,7 @@ class Contact
 		std::string darkest_secret;
 
 	public:
+		Contact(void);
 		Contact(
 				const std::string&,
 				const std::string&,
@@ -23,14 +27,9 @@ class Contact
 		const std::string&	getPhoneNumber(void) const;
 		const std::string&	getDarkestSecret(void) const;
 	
-	private:
-		bool	isValidInput(const std::string&);
-
-		// bool	setFirstName(const std::string&) const;
-		// bool	setLastName(const std::string&) const;
-		// bool	setNickName(const std::string&) const;
-		// bool	setPhoneNumber(const int) const;
-		// bool	setDarkestSecret(const int) const;
+	static bool	isValidInput(const std::string&);
 };
 
-std::ostream& operator<<(std::ostream& os, const Contact& c);
+std::ostream& operator<<(std::ostream&, const Contact&);
+
+#endif

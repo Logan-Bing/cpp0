@@ -1,15 +1,11 @@
 #include <iostream>
-#include <stdexcept>
-#include "Contact.hpp"
-#include "PhoneBook.hpp"
+#include "Interface.hpp"
 
 int main()
 {
-	try {
-		Contact c("", "", "a", "ewq", "ewqewq");
-	} catch (std::invalid_argument& e) {
-		std::cerr << e.what();
-	}
+	Interface i;
+
+	i.monitor();
 
 	return (0);
 }

@@ -10,10 +10,14 @@ Contact::Contact(
 )
 {
 	isValidInput(first_name) ? this->first_name = first_name : throw std::invalid_argument("invalid_argument (first_name)");
-	isValidInput(last_name) ? this->nickname = last_name: throw std::invalid_argument("invalid_argument (last_name)");
+	isValidInput(last_name) ? this->last_name = last_name: throw std::invalid_argument("invalid_argument (last_name)");
 	isValidInput(nickname) ? this->nickname = nickname : throw std::invalid_argument("invalid_argument (nickname)");
 	isValidInput(phone_number) ? this->phone_number = phone_number : throw std::invalid_argument("invalid_argument (phone_number)");
 	isValidInput(darkest_secret) ? this->darkest_secret = darkest_secret : throw std::invalid_argument("invalid_argument (darkest_secret)");
+}
+
+Contact::Contact(void)
+{
 }
 
 const std::string&	Contact::getFirstName(void) const
@@ -48,18 +52,10 @@ bool	Contact::isValidInput(const std::string& input)
 
 std::ostream& operator<<(std::ostream& os, const Contact& c)
 {
-	os.setf(std::ios_base::right);
-	// os << std::setfill('.');
-	os << std::setw(10);
-	os << c.getFirstName() << '|';
-	os << std::setw(10);
-	os << c.getLastName() << '|';
-	os << std::setw(10);
-	os << c.getNickName() << '|';
-	os << std::setw(10);
-	os << c.getPhoneNumber() << '|';
-	os << std::setw(10);
-	os << c.getDarkestSecret();
-	os << '\n';
+	os << c.getFirstName() << '\n';
+	os << c.getLastName() << '\n';
+	os << c.getNickName() << '\n';
+	os << c.getPhoneNumber() << '\n';
+	os << c.getDarkestSecret() << '\n';
 	return (os);
 }
