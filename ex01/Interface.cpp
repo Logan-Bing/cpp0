@@ -1,40 +1,75 @@
-#include <iostream>
-#include <string>
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 #include "Interface.hpp"
+#include "header.h"
 
 Interface::Interface(){}
 
+void	Interface::seed()
+{
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "1", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "2", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "3", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "4", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "5", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "6", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "7", "2608"));
+	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "8", "2608"));
+}
+
+template <typename T>
+T	askForInput(const std::string& prompt)
+{
+	T value;
+	std::cout << prompt;
+	std::cin >> value;
+	std::cin.exceptions(std::ios::eofbit);
+	if (std::cin.fail()) throw std::invalid_argument("invalid_argument");
+	return (value);
+}
+
 void	Interface::monitor()
 {
-	PhoneBook phone_book;
 	std::cout << "Available command [ADD] [SEARCH] [EXIT]" << '\n';
 	while (this->user_input != "EXIT")
 	{
-		std::cout << "> ";
-		std::cin >> this->user_input;
-		if (this->user_input == "ADD")
+		try
 		{
-			phone_book.addContact(createContact());
+			this->user_input = askForInput<std::string>("> ");
+
+			if (this->user_input == "ADD")	this->handleAddCmd();
+			if (this->user_input == "SEARCH") this->handleSearchCmd();
 		}
-		else if (this->user_input == "SEARCH")
+		catch (const std::invalid_argument& error)
 		{
-			std::cout << phone_book;
-			int index;
-			std::cout << "Type index Contact: ";
-			std::cin >> index;
-			std::cout << phone_book.findByIndex(index);
+			std::cout << error.what() << '\n';
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		catch(const std::exception& ex)
+		{
+			std::cout << '\n' << "Exit" << '\n';
+			break;
 		}
 	}
 }
 
-// void	Interface::askForContactIndex()
-// {
-// 	int index;
-// 	std::cout << "Type index Contact: ";
-// 	std::cin >> index;
-// }
+void	Interface::handleAddCmd()
+{
+	this->phonebook.addContact(createContact());
+}
+
+void	Interface::handleSearchCmd()
+{
+	std::cout << this->phonebook;
+	this->askForContactIndex();
+}
+
+void	Interface::askForContactIndex()
+{
+	int index = askForInput<int>("Type index Contact: ");
+	std::cout << this->phonebook.findByIndex(index);
+}
 
 void	Interface::askForContactArg(std::string& attr, const char *label)
 {

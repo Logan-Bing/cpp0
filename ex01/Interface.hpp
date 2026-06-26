@@ -2,6 +2,7 @@
 #define INTERFACE_HPP
 
 #include "Contact.hpp"
+#include "PhoneBook.hpp"
 #include <iostream>
 #include <string>
 
@@ -9,12 +10,16 @@ class Interface
 {
 	private:
 		std::string	user_input;
+		PhoneBook	phonebook;
 
 	public:
 		Interface(void);
+		void	seed();
 		void	monitor();
 		void	askForContactArg(std::string&, const char *);
 		void	askForContactIndex();
+		void	handleAddCmd();
+		void	handleSearchCmd();
 		Contact	createContact();
 };
 

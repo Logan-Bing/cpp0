@@ -10,8 +10,15 @@ PhoneBook::PhoneBook(void) : count (0)
 
 void	PhoneBook::addContact(const Contact& new_contact)
 {
+	if (this->count == 0)
+	{
+		this->contacts[this->count] = new_contact;
+		this->count++;
+		return ;
+	}
+	if (this->count >= CONTACTS_SIZE) this->count--;
 	this->contacts[this->count] = new_contact;
-	this->count >= CONTACTS_SIZE - 1 ? this->count = CONTACTS_SIZE - 1: this->count++;
+	this->count++;
 }
 
 int	PhoneBook::getCount(void) const
@@ -26,7 +33,7 @@ const Contact*	PhoneBook::getContacts(void) const
 
 const Contact&	PhoneBook::findByIndex(int index)
 {
-	return index > this->count || index < this->count ? this->contacts[index] : throw std::invalid_argument("invalid_index");
+	return index > this->count || index <= 0 ? throw std::invalid_argument("invalid_index") : this->contacts[index - 1];
 }
 
 std::ostream& operator<<(std::ostream& os, const PhoneBook& phone_book)
@@ -48,7 +55,7 @@ std::ostream& operator<<(std::ostream& os, const PhoneBook& phone_book)
 	for (int i = 0; i < phone_book.getCount(); i++)
 	{
 		os << std::setw(10);
-		os << i << '|';
+		os << i + 1 << '|';
 		os << std::setw(10);
 		os << contacts[i].getFirstName() << '|';
 		os << std::setw(10);
