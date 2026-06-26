@@ -1,9 +1,8 @@
 #ifndef	PHONEBOOK_HPP 
 #define PHONEBOOK_HPP
 
-#include <iostream>
-#include <ostream>
 #include "Contact.hpp"
+#include "header.h"
 
 #define CONTACTS_SIZE 8
 

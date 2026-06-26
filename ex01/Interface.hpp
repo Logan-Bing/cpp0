@@ -3,8 +3,7 @@
 
 #include "Contact.hpp"
 #include "PhoneBook.hpp"
-#include <iostream>
-#include <string>
+#include "header.h"
 
 class Interface
 {

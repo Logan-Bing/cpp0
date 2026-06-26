@@ -1,4 +1,5 @@
 #include "Contact.hpp"
+#include "header.h"
 
 Contact::Contact(
 		const std::string& first_name,
@@ -51,10 +52,16 @@ bool	Contact::isValidInput(const std::string& input)
 
 std::ostream& operator<<(std::ostream& os, const Contact& c)
 {
+	std::left(os);
+	os << std::setw(20);	
 	os << "Firstname: " << c.getFirstName() << '\n';
+	os << std::setw(20);	
 	os << "Lastname: " << c.getLastName() << '\n';
+	os << std::setw(20);	
 	os << "Nickname: " << c.getNickName() << '\n';
+	os << std::setw(20);	
 	os << "Phonenumber: " << c.getPhoneNumber() << '\n';
+	os << std::setw(20);	
 	os << "DarkestSecret: " << c.getDarkestSecret() << '\n';
 	return (os);
 }
