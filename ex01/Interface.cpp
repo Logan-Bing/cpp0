@@ -2,6 +2,8 @@
 #include "Contact.hpp"
 #include "Interface.hpp"
 #include "header.h"
+#include <sstream>
+#include <stdexcept>
 
 Interface::Interface(){}
 
@@ -17,12 +19,10 @@ void	Interface::seed()
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "8", "2608"));
 }
 
-template <typename T>
-T	askForInput(const std::string& prompt)
+std::string	askForInput(const std::string& prompt, std::string& value)
 {
-	T value;
 	std::cout << prompt;
-	std::cin >> value;
+	std::getline(std::cin, value);
 	std::cin.exceptions(std::ios::eofbit);
 	if (std::cin.fail()) throw std::invalid_argument("invalid_argument");
 	return (value);
@@ -35,7 +35,7 @@ void	Interface::monitor()
 	{
 		try
 		{
-			this->user_input = askForInput<std::string>("> ");
+			askForInput("> ", this->user_input);
 
 			if (this->user_input == "ADD")	this->handleAddCmd();
 			if (this->user_input == "SEARCH") this->handleSearchCmd();
@@ -61,21 +61,30 @@ void	Interface::handleAddCmd()
 
 void	Interface::handleSearchCmd()
 {
+	if (this->phonebook.getCount() <= 0)
+	{
+		std::cout << "The phonebook is empty, use ADD cmd for add a new one" << '\n';
+		return; 
+	} 
+
 	std::cout << this->phonebook;
 	this->askForContactIndex();
 }
 
 void	Interface::askForContactIndex()
 {
-	int index = askForInput<int>("Type index Contact: ");
-	std::cout << this->phonebook.findByIndex(index);
-}
-
-void	Interface::askForContactArg(std::string& attr, const char *label)
-{
-	std::cout << label << ": "; 
-	std::cin >> attr;
-	Contact::isValidInput(attr);
+	std::string str;
+	int	index;
+	try 
+	{
+		askForInput("Type index Contact: ", str);
+		std::istringstream(str) >> index;
+		std::cout << this->phonebook.findByIndex(index);
+	}
+	catch (const std::invalid_argument & error) 
+	{
+		std::cout << error.what() << '\n';
+	};
 }
 
 Contact	Interface::createContact()
@@ -85,20 +94,21 @@ Contact	Interface::createContact()
 	std::string nickname;
 	std::string phone_number;
 	std::string darkest_secret;
+	Contact c;
 
 	try
 	{
-		this->askForContactArg(first_name, "Firstname");
-		this->askForContactArg(last_name, "Lastname");
-		this->askForContactArg(nickname, "Nickname");
-		this->askForContactArg(phone_number, "Phone number");
-		this->askForContactArg(darkest_secret, "Darkest secret");
+		askForInput("Firstname: ", first_name);
+		askForInput("Last_name: ", last_name);
+		askForInput("Nickname: ", nickname);
+		askForInput("PhoneNumber: ", phone_number);
+		askForInput("DarkestSecret: ", darkest_secret);
+		c = Contact(first_name, last_name, nickname, phone_number, darkest_secret);
 	}
 	catch (const std::invalid_argument& e)
 	{
 		std::cerr << e.what() << '\n';
 	}
 
-	Contact c(first_name, last_name, nickname, phone_number, darkest_secret);
 	return c;
 }

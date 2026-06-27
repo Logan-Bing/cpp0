@@ -15,7 +15,6 @@ class Interface
 		Interface(void);
 		void	seed();
 		void	monitor();
-		void	askForContactArg(std::string&, const char *);
 		void	askForContactIndex();
 		void	handleAddCmd();
 		void	handleSearchCmd();

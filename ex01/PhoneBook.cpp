@@ -5,12 +5,6 @@ PhoneBook::PhoneBook(void) : count (0){}
 
 void	PhoneBook::addContact(const Contact& new_contact)
 {
-	if (this->count == 0)
-	{
-		this->contacts[this->count] = new_contact;
-		this->count++;
-		return ;
-	}
 	if (this->count >= CONTACTS_SIZE) this->count--;
 	this->contacts[this->count] = new_contact;
 	this->count++;
@@ -59,10 +53,10 @@ std::ostream& operator<<(std::ostream& os, const PhoneBook& phone_book)
 	{
 		printField(os, i + 1);
 		printField(os, contacts[i].getFirstName());
+		printField(os, contacts[i].getLastName());
 		printField(os, contacts[i].getNickName());
 		printField(os, contacts[i].getPhoneNumber());
 		printField(os, contacts[i].getDarkestSecret());
-		printField(os, contacts[i].getLastName());
 		os << '\n';
 	}
 	return (os);
