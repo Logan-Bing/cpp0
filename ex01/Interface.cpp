@@ -2,8 +2,6 @@
 #include "Contact.hpp"
 #include "Interface.hpp"
 #include "header.h"
-#include <sstream>
-#include <stdexcept>
 
 Interface::Interface(){}
 
