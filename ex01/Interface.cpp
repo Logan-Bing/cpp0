@@ -7,14 +7,14 @@ Interface::Interface(){}
 
 void	Interface::seed()
 {
-	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "1", "2608"));
+	this->phonebook.addContact(Contact("first", "Doe", "JD", "1", "2608"));
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "2", "2608"));
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "3", "2608"));
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "4", "2608"));
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "5", "2608"));
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "6", "2608"));
 	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "7", "2608"));
-	this->phonebook.addContact(Contact("jhon", "Doe", "JD", "8", "2608"));
+	this->phonebook.addContact(Contact("last", "Doe", "JD", "8", "2608"));
 }
 
 std::string	askForInput(const std::string& prompt, std::string& value)
@@ -34,7 +34,6 @@ void	Interface::monitor()
 		try
 		{
 			askForInput("> ", this->user_input);
-
 			if (this->user_input == "ADD")	this->handleAddCmd();
 			if (this->user_input == "SEARCH") this->handleSearchCmd();
 		}
@@ -42,7 +41,6 @@ void	Interface::monitor()
 		{
 			std::cout << error.what() << '\n';
 			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 		catch(const std::exception& ex)
 		{
@@ -94,19 +92,12 @@ Contact	Interface::createContact()
 	std::string darkest_secret;
 	Contact c;
 
-	try
-	{
-		askForInput("Firstname: ", first_name);
-		askForInput("Last_name: ", last_name);
-		askForInput("Nickname: ", nickname);
-		askForInput("PhoneNumber: ", phone_number);
-		askForInput("DarkestSecret: ", darkest_secret);
-		c = Contact(first_name, last_name, nickname, phone_number, darkest_secret);
-	}
-	catch (const std::invalid_argument& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
+	askForInput("Firstname: ", first_name);
+	askForInput("Last_name: ", last_name);
+	askForInput("Nickname: ", nickname);
+	askForInput("PhoneNumber: ", phone_number);
+	askForInput("DarkestSecret: ", darkest_secret);
 
+	c = Contact(first_name, last_name, nickname, phone_number, darkest_secret);
 	return c;
 }

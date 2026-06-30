@@ -5,7 +5,14 @@ PhoneBook::PhoneBook(void) : count (0){}
 
 void	PhoneBook::addContact(const Contact& new_contact)
 {
-	if (this->count >= CONTACTS_SIZE) this->count--;
+	if (this->count >= CONTACTS_SIZE)
+	{
+		for(int i = 0; i < this->count - 1; i++)
+		{
+			this->contacts[i] = this->contacts[i + 1];
+		}
+		this->count--;
+	}
 	this->contacts[this->count] = new_contact;
 	this->count++;
 }
